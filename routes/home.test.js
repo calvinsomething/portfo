@@ -1,5 +1,4 @@
 const request = require('supertest');
-const { context } = require('./home');
 
 describe('GET /', () => {
     let server;
@@ -16,7 +15,7 @@ describe('GET /', () => {
     });
 
     it('should return templated html', async () => {
-        const res = await request(server).get('/');
-        expect(res.text).toMatch(new RegExp(`${context}`));
+        const res = await request(server).get('/:jesting');
+        expect(res.text).toMatch(/jesting/);
     });
 });

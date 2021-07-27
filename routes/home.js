@@ -2,11 +2,17 @@ const express = require('express');
 
 const router = express.Router();
 
-const context = 'templating activated';
+const context = {
+    message:'templating activated'
+};
 
 router.get('/', (req, res) => {
-    res.render('index', {message: context});
+    res.render('index', context);
+});
+
+router.get('/:arg', (req, res) => {
+    context.arg = req.params.arg;
+    res.render('index', context);
 });
 
 module.exports = router;
-module.exports.context = context;
