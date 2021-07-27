@@ -7,12 +7,12 @@ const context = {
 };
 
 router.get('/', (req, res) => {
-    res.render('index', context);
+    res.render('download/index', context);
 });
 
 router.get('/:arg', (req, res) => {
     context.arg = req.params.arg;
-    res.render('index', context);
+    res.render('download/index', context);
 });
 
 module.exports = router;
