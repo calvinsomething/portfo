@@ -11005,3 +11005,7 @@ section.resume-section .resume-section-content {
 #name-top {
   font-size: 2rem;
 }
+
+#calvin-resume:hover {
+  cursor: pointer;
+}

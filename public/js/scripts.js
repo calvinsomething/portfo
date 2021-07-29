@@ -32,3 +32,7 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+const openResume = event => window.open('/site/assets/resume.pdf', 'newwindow', 'width=900,height=1250');
+
+document.getElementById('calvin-resume').addEventListener('click', openResume);

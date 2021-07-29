@@ -15,7 +15,7 @@ describe('GET /', () => {
     });
 
     it('should return templated html', async () => {
-        const res = await request(server).get('/:jesting');
-        expect(res.text).toMatch(/jesting/);
+        const res = await request(server).get('/jesting:test');
+        expect(res.text).toMatch(/test/);
     });
 });
