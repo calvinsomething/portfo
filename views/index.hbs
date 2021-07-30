@@ -29,9 +29,9 @@
                                 Toronto ON · (416) 795 5025 ·
                                 <a href="mailto:calvinsomething@gmail.com">calvinsomething@gmail.com</a>
                             </div>
-                            <p class="lead">I am a self-taught programmer focused on back-end software development.<br>I love collaborating, problem solving, and learning new things.</p>
+                            <p class="lead">I am a self-taught programmer focused on back-end development.<br>I love collaborating, problem solving, and learning new things.</p>
                         </div>
-                        <img id="headshot" class="d-none d-md-block float-right ms-5 border border-5" src="site/assets/img/calvin.jpg" alt="Calvin Photo"/>
+                        <img id="headshot" class="d-none d-md-block float-right ms-5 shadow-lg p-1 bg-body" src="site/assets/img/calvin3.jpg" alt="Calvin Photo"/>
                     </section>
                 </div>
             </div>
@@ -42,27 +42,35 @@
             <section class="resume-section" id="projects">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Projects</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Chess Web App</h3>
-                            <div class="subheading mb-3">Bachelor of Science</div>
-                            <div>Computer Science - Web Development Track</div>
-                            <p>GPA: 3.23</p>
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <div class="col">
+                            <div class="card h-100">
+                            <video class="vids" src="site/assets/vid/chess.mp4" autoplay loop muted></video>
+                                <div class="card-body">
+                                    <h5 class="card-title">Chess Web App</h5>
+                                    <p class="card-text">
+                                        Play multiplayer chess games and view replays of past games. Made with Django, Django-Channels, Redis, Gunicorn, Nginx, JavaScript and Docker.
+                                    </p>
+                                    <a href="http://ec2-3-20-185-37.us-east-2.compute.amazonaws.com/" target="_blank" class="btn btn-primary">Demo</a>
+                                    <a href="https://github.com/calvinsomething/Online-Chess" target="_blank" class="btn btn-primary">Code</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2006 - May 2010</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">James Buchanan High School</h3>
-                            <div class="subheading mb-3">Technology Magnet Program</div>
-                            <p>GPA: 3.56</p>
+                        <div class="col">
+                            <div class="card h-100">
+                                <video class="vids" src="site/assets/vid/cudoku.mp4" autoplay loop muted></video>
+                                <div class="card-body">
+                                    <h5 class="card-title">Sudoku Player</h5>
+                                    <p class="card-text">Generates randomized puzzles with unique solutions. Gives hints or solves the puzzle. Made in C++ with wxWidget--compiled on Windows.</p>
+                                    <a href="https://github.com/calvinsomething/CudokuPP" target="_blank" class="btn btn-primary">Code + Download</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2002 - May 2006</span></div>
-                    </div>
+                        </div>
                 </div>
             </section>
             <hr class="m-0" />
-            <!-- Interests-->
+            <!-- Cool Stuff -->
             <section class="resume-section" id="interests">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Interests</h2>
@@ -89,6 +97,7 @@
                                 <label for="exampleFormControlTextarea1" class="form-label">Message:</label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="8"></textarea>
                             </div>
+                            <a href="#" class="btn btn-primary">Send</a>
                         </div>
                     </div>
                 </div>
