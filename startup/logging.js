@@ -1,29 +1,34 @@
+const morgan = require('mongoose-morgan');
 const winston = require('winston');
 require('express-async-errors');
+require('winston-mongodb');
 
-module.exports = () => {
-    let consoleLevel = 'error';
-    if (process.env.NODE_ENV != 'production')
-        consoleLevel = 'info';
+module.exports = (app) => {
+    if (process.env.NODE_ENV !== 'production') {
+        winston.add(new winston.transports.Console({
+            level: 'info',
+            format: winston.format.combine(
+                winston.format.colorize(),
+                winston.format.simple(),
+            ),
+            handleExceptions: true,
+            handleRejections: true
+        }));
+    }
+    winston.add(new winston.transports.MongoDB({
+        db: process.env.DB,
+        collection: 'winston',
+        level: 'info',
+        format: winston.format.simple(),
+        handleExceptions: true,
+        handleRejections: true
+    }));
 
-    winston.configure({
-        transports: [
-            new winston.transports.File({
-                filename: 'portfo.log',
-                level: 'error',
-                format: winston.format.simple(),
-                handleExceptions: true,
-                handleRejections: true
-            }),
-            new winston.transports.Console({
-                level: consoleLevel,
-                format: winston.format.combine(
-                    winston.format.colorize(),
-                    winston.format.simple(),
-                ),
-                handleExceptions: true,
-                handleRejections: true
-            })
-        ]
-    });
+    app.use(morgan({
+        collection: 'morgan',
+        connectionString: process.env.DB,
+        //user: 'admin',
+        //pass: 'test12345'
+       }
+    ));
 };
