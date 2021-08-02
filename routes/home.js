@@ -1,14 +1,14 @@
 const express = require('express');
 const path = require('path');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-const context = {
-    message:'templating activated'
-};
+const context = {};
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     delete context.test;
+    context.user = req.user;
     res.render('index', context);
 });
 
