@@ -11009,3 +11009,7 @@ section.resume-section .resume-section-content {
 #calvin-resume:hover {
   cursor: pointer;
 }
+
+#google {
+  width: 100%;
+}

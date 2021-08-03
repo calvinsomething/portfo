@@ -73,10 +73,20 @@
             <!-- Cool Stuff -->
             <section class="resume-section" id="cool-stuff">
                 <div class="resume-section-content">
-                    <h2 class="mb-5">Sign In With:</h2>
-                    <a href="/auth/google">GOOGLE</a>
-                    <p>Logged in as: {{ user.name }}</p>
-                    <img src={{ user.photo }}>
+                    <div class="row">
+                        <div class="card" style="width: 10rem;">
+                            <div class="card-body">
+                                {{#if signedIn}}
+                                    <h5 class="card-title">Signed in as: {{ user.name }}</h5>
+                                    <img src={{ user.photo }}>
+                                    <a href="/logout">Sign Out</a>
+                                {{else}}
+                                    <h5 class="card-title">Sign in with: </h5>
+                                    <a href="/auth/google"><img id="google" src="/site/assets/img/google.png"></a>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
             <hr class="m-0" />
