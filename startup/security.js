@@ -18,7 +18,7 @@ module.exports = (app) => {
             id: profile.id,
             name: profile.name.givenName,
             photo: profile._json.picture
-        }
+        };
         done(null, user);
     }));
 

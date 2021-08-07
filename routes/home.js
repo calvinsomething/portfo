@@ -1,15 +1,16 @@
 const express = require('express');
 const path = require('path');
+const winston = require('winston');
 const auth = require('../middleware/auth');
+const mailer = require('../mailer/mailer');
 
 const router = express.Router();
 
 router.get('/', auth, (req, res) => {
-    const context = { signedIn: false };
-    if (req.isAuthenticated() && req.user) {
-        context.user = req.user;
-        context.signedIn = true;
-    }
+    const context = {
+        signedIn: req.signedIn,
+        user: req.user
+    };
     res.render('index', context);
 });
 
@@ -29,6 +30,11 @@ if (process.env.NODE_ENV === 'test') {
 
 router.get('/logout', (req, res) => {
     req.logout();
+    res.redirect('/');
+});
+
+router.post('/contact', (req, res) => {
+    mailer(req.body.email, req.body.name, req.body.message);
     res.redirect('/');
 });
 

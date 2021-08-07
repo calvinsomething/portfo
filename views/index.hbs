@@ -21,10 +21,8 @@
                 <div class="col-12">
                     <section class="resume-section" id="about">
                         <div class="resume-section-content">
-                            <h1>
-                                Calvin{{test}}
-                                <span class="text-primary">Storoschuk</span>
-                            </h1>
+                            {{test}}
+                            <h1>Calvin <span class="text-primary">Storoschuk</span></h1>
                             <div class="subheading mb-5">
                                 Toronto ON · (416) 795 5025 ·
                                 <a href="mailto:calvinsomething@gmail.com">calvinsomething@gmail.com</a>
@@ -94,23 +92,25 @@
             <section class="resume-section" id="contact">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Contact Me</h2>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Name:</label>
-                                <input class="form-control" id="exampleFormControlInput1">
+                    <form action="/contact" method="POST">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Name:</label>
+                                    <input class="form-control" id="exampleFormControlInput1" name="name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Email:</label>
+                                    <input type="email" class="form-control" id="exampleFormControlInput1" name="email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Message:</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="8"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send</button>
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Email:</label>
-                                <input type="email" class="form-control" id="exampleFormControlInput1">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Message:</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="8"></textarea>
-                            </div>
-                            <a href="#" class="btn btn-primary">Send</a>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
         </div>

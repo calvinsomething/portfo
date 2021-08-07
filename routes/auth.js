@@ -11,6 +11,6 @@ router.get(
     (req, res) => res.redirect('/')
 );
 
-router.get('/login', (req, res) => { res.send('NEED TO LOG IN'); });
+router.get('/login', (req, res) => { res.send('Need to log in.'); });
 
 module.exports = router;
