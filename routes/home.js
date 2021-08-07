@@ -19,12 +19,13 @@ router.get('/resume', (req, res) => {
 });
 
 if (process.env.NODE_ENV === 'test') {
+    router.get('/error', (req, res) => {
+        throw new Error('/error');
+    });
+
     router.get('/:arg', (req, res) => {
-        const context = {};
-        const test = /(?<=jesting:).*/.exec(req.params.arg);
-        if (test) context.test = test[0];
+        const context = { test: req.params.arg };
         res.render('index', context);
-        delete context.test;
     });
 }
 

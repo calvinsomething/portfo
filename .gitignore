@@ -1,4 +1,7 @@
+# Setup and Testing
 node_modules
 coverage
+# Environment
 .env
+# DB Files
 db

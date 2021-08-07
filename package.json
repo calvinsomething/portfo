@@ -1,10 +1,11 @@
 {
   "name": "portfo",
-  "version": "1.0.0",
+  "version": "0.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "DB=mongodb://localhost/portfo_test jest --watchAll --verbose --coverage --detectOpenHandles",
+    "docker-test": "jest --watchAll --verbose --coverage --detectOpenHandles",
     "watch": "nodemon server.js"
   },
   "repository": {
