@@ -35,42 +35,31 @@ window.addEventListener('DOMContentLoaded', event => {
 
 // Stock Chart
 
-var ctx = document.getElementById('stock-chart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
+const ctx = document.getElementById('stock-chart').getContext('2d');
+async function graphStock() {
+    const { symbol, times, prices } = await getData('F');
+    const stockGraph = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: times,
+            datasets: [{
+                data: prices,
+                borderColor: '#90C0A0',
+                backgroundColor: '#A0E0B0'
+            }]
         }
-    }
-});
+    });
+}
 
+async function getData(symbol) {
+    try {
+        const res = await fetch(`${window.location.href}stocks?symbol=${symbol}`);
+        console.log(res);
+        return res.json();
+    } catch (err) {
+        console.log('Unable to obtain stock info.');
+    }
+}
 
 // Open PDF in new window
 
@@ -81,6 +70,7 @@ document.getElementById('calvin-resume').addEventListener('click', openResume);
 // Redirect to profile when logged in
 
 onload = () => {
+    graphStock();
     if (document.getElementById('signedIn').innerHTML == 'true')
         window.location.replace(window.location.href + '#stocks');
 };
