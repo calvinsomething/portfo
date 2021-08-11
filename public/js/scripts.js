@@ -35,27 +35,36 @@ window.addEventListener('DOMContentLoaded', event => {
 
 // Stock Chart
 
+const form = document.getElementById('find-stock');
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    graphStock(new FormData(form).get('symbol').toUpperCase());
+});
+
 const ctx = document.getElementById('stock-chart').getContext('2d');
-async function graphStock() {
-    const { symbol, times, prices } = await getData('F');
-    const stockGraph = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: times,
-            datasets: [{
-                data: prices,
-                borderColor: '#90C0A0',
-                backgroundColor: '#A0E0B0'
-            }]
-        }
-    });
+const stockGraph = new Chart(ctx, {
+    type: 'line'
+});
+
+async function graphStock(s) {
+    const { symbol, times, prices } = await getData(s);
+    stockGraph.data.labels = times;
+    stockGraph.data.datasets = [{
+        label: s,
+        data: prices,
+        borderColor: '#90C0A0',
+        backgroundColor: '#A0E0B0'
+    }];
+    stockGraph.update();
 }
 
 async function getData(symbol) {
     try {
-        const res = await fetch(`${window.location.href}stocks?symbol=${symbol}`);
-        console.log(res);
-        return res.json();
+        console.log(`${window.location.href}stocks?symbol=${symbol}`);
+        const res = await fetch(`/stocks?symbol=${symbol}`);
+        const j = res.json();
+        console.log(j);
+        return j;
     } catch (err) {
         console.log('Unable to obtain stock info.');
     }
@@ -70,7 +79,7 @@ document.getElementById('calvin-resume').addEventListener('click', openResume);
 // Redirect to profile when logged in
 
 onload = () => {
-    graphStock();
-    if (document.getElementById('signedIn').innerHTML == 'true')
-        window.location.replace(window.location.href + '#stocks');
+    if (document.getElementById('signedIn').innerHTML == 'true'
+        && !/#stocks$/.test(window.location.href))
+            window.location.replace(window.location.href + '#stocks');
 };

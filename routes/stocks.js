@@ -8,7 +8,7 @@ const UTCtoEST = -4 * 60 * 60 * 1000;
 const options = {
     method: 'GET',
     url: process.env.YAHOO_URL,
-    params: {interval: '5m', range: '1d', region: 'US'},
+    params: {interval: '10m', range: '1d', region: 'US'},
     headers: {
       'x-rapidapi-key': process.env.RAPIDAPI_KEY,
       'x-rapidapi-host': process.env.RAPIDAPI_HOST
