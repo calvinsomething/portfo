@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const winston = require('winston');
 const auth = require('../middleware/auth');
-const mailer = require('../mailer/mailer');
+const mailer = require('../services/mailer');
 
 const router = express.Router();
 
