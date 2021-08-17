@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const express = require('express');
 const path = require('path');
 const winston = require('winston');
@@ -7,10 +8,11 @@ const mailer = require('../services/mailer');
 const router = express.Router();
 
 router.get('/', auth, (req, res) => {
-    const context = {
-        signedIn: req.signedIn,
-        user: req.user
-    };
+    const context = { signedIn: req.signedIn };
+    if (req.signedIn) {
+        _.extend(context, _.pick(req.user, ['name', 'photo']));
+        context.balance = toDollars(req.user.balance);
+    }
     res.render('index', context);
 });
 
@@ -39,5 +41,9 @@ router.post('/contact', (req, res) => {
     res.redirect('/');
 });
 
+function toDollars(cents) {
+    const asStr = cents.toString();
+    return asStr.slice(0, asStr.length - 2) + '.' + asStr.slice(asStr.length - 2, asStr.length);
+};
 
 module.exports = router;

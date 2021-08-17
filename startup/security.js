@@ -11,23 +11,16 @@ module.exports = (app) => {
         callbackURL: "/auth/google/callback"
     },
     (accessToken, refreshToken, profile, done) => {
-        // User.findOrCreate(profile, (err, id) => {
-        //     done(err, id);
-        // });
-        const user = {
-            id: profile.id,
-            name: profile.name.givenName,
-            photo: profile._json.picture
-        };
-        done(null, user);
+        User.findOrCreate(profile, done);
     }));
 
     passport.serializeUser((user, done) => {
-        done(null, user);
+        done(null, user.external_id);
     });
 
-    passport.deserializeUser((obj, done) => {
-        done(null, obj);
+    passport.deserializeUser(async (id, done) => {
+        const user = await User.findOne({ external_id: id });
+        done(null, user);
     });
 
     app.use(cookieSession({

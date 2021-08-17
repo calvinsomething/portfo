@@ -47,12 +47,13 @@ userSchema.statics.findOrCreate = async function(profile, cb) {
         user = await this.findOne({ external_id: profile.id });
         if (!user) {
             user = await this.create({
-            name: profile.name.givenName,
-            external_id: profile.id,
-            photo: profile._json.picture
+                name: profile.name.givenName,
+                external_id: profile.id,
+                photo: profile._json.picture
             });
+            winston.info(`Creating new user: ${ user.name }--${ user._id }.`);
         }
-        cb(null, user.id);
+        cb(null, user);
     } catch(err) {
         cb(err, null);
     }
