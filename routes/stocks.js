@@ -1,5 +1,6 @@
-const axios = require("axios").default;
+const axios = require('axios').default;
 const express = require('express');
+const { middleware: cache, setexAsync: setCache } = require('../middleware/cache');
 
 const router = express.Router();
 
@@ -8,14 +9,14 @@ const UTCtoEST = -4 * 60 * 60 * 1000;
 const options = {
     method: 'GET',
     url: process.env.YAHOO_URL,
-    params: {interval: '10m', range: '1d', region: 'US'},
+    params: {interval: '15m', range: '1d', region: 'US'},
     headers: {
       'x-rapidapi-key': process.env.RAPIDAPI_KEY,
       'x-rapidapi-host': process.env.RAPIDAPI_HOST
     }
 };
 
-router.get('/', (req, res) => {
+router.get('/', cache, (req, res) => {
     options.params.symbol = req.query.symbol;
     axios.request(options).then(function (response) {
         return res.send(cleanData(response.data.chart.result[0]));
@@ -33,11 +34,13 @@ function cleanData(data) {
         const d = new Date(t[i] * 1000 + UTCtoEST);
         times[i] = String(`${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`);
     }
-    return {
+    const clean = {
         symbol: data.meta.symbol,
         times: times,
         prices: data.indicators.quote[0].close
     };
+    setCache(clean.symbol, 120, JSON.stringify(clean));
+    return clean;
 }
 
 exports = module.exports = router;
