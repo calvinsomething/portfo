@@ -35,10 +35,23 @@ window.addEventListener('DOMContentLoaded', event => {
 
 // Stock Chart
 
+let currentStock = '';
+
 const form = document.getElementById('find-stock');
+const buy = document.getElementById('buy');
+const quantity = document.getElementById('quantity');
+
 form.addEventListener('submit', e => {
     e.preventDefault();
     graphStock(new FormData(form).get('symbol').toUpperCase());
+});
+
+buy.addEventListener('click', async () => {
+    const quantity = new FormData(form).get('quantity');
+    if (quantity < 1) return alert('Must enter a valid quantity.');
+    const res = await fetch(`/buy/${currentStock}/${quantity}`);
+    const j = await res.json();
+    if (j.failure) alert(j.failure);
 });
 
 const ctx = document.getElementById('stock-chart').getContext('2d');
@@ -60,15 +73,15 @@ async function graphStock(s) {
 
 async function getData(symbol) {
     try {
-        console.log(`${window.location.href}stocks?symbol=${symbol}`);
+        currentStock = symbol;
         const res = await fetch(`/stocks?symbol=${symbol}`);
-        const j = res.json();
-        console.log(j);
-        return j;
+        return res.json();
     } catch (err) {
         console.log('Unable to obtain stock info.');
     }
 }
+
+
 
 // Open PDF in new window
 

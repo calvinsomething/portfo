@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const winston = require('winston');
 const getStockPrice = require('../services/stock_pricer');
 
 // Schemas
@@ -36,6 +37,11 @@ const userSchema = new mongoose.Schema({
         default: 1000000,
         min: 0
     },
+    spent: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
     stocks: [stockSchema]
 });
 
@@ -61,7 +67,7 @@ userSchema.statics.findOrCreate = async function(profile, cb) {
 
 userSchema.methods.buy = async function(symbol, quantity) {
     const totalPrice = await getStockPrice(symbol) * quantity;
-    if (totalPrice > this.balance) return false;
+    if (totalPrice > this.balance - this.spent) return false;
     const stock = this.stocks.find(stock => stock.symbol === symbol);
     if (stock) {
         stock.quantity += quantity;
@@ -73,7 +79,7 @@ userSchema.methods.buy = async function(symbol, quantity) {
             totalCost: totalPrice
         });
     }
-    this.balance -= totalPrice;
+    this.spent += totalPrice;
     await this.save();
     return true;
 };
@@ -84,7 +90,7 @@ userSchema.methods.sell = async function(symbol, quantity) {
     if (owned !== undefined && quantity > owned.quantity) return false;
     this.stocks.quantity -= quantity;
     this.stocks.totalCost -= totalPrice;
-    this.balance += totalPrice;
+    this.spent -= totalPrice;
     await this.save();
     return true;
 };

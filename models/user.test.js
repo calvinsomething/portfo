@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const request = require('supertest');
 const app = require('../app');
+const getStockPrice = require('../services/stock_pricer');
 const User = require('./user');
 
-// const getStockPrice = jest.fn().mockReturnValue(1000);
+jest.mock('../services/stock_pricer');
 
 describe('User model', () => {
 
@@ -16,6 +17,7 @@ describe('User model', () => {
     beforeEach(async () => {
         testUser = new User(expected);
         await testUser.save();
+        getStockPrice.mockResolvedValue(10);
     });
 
     afterEach(async () => {
@@ -29,18 +31,20 @@ describe('User model', () => {
         expected.stocks = {
             symbol: 'AMZN',
             quantity: 3,
-            totalCost: 150000
+            totalCost: 30
         };
         expect(testUser.stocks).toEqual(expect.arrayContaining([expect.objectContaining(expected.stocks)]));
     });
 
-    it('should reduce balance by amount equal to purchased stocks', async () => {
+    it('should increase spent by amount equal to purchased stocks', async () => {
         await testUser.buy('TEST', 10);
-        expect(testUser.balance).toBe(500000);
+        expect(testUser.spent).toBe(100);
     });
 
-    it('should increase balance by amount equal to sold stocks', async () => {
+    it('should reduce spent by amount equal to sold stocks', async () => {
+        testUser.spent = 100;
+        await testUser.save();
         await testUser.sell('TEST', 10);
-        expect(testUser.balance).toBe(1500000);
+        expect(testUser.spent).toBe(0);
     });
 });

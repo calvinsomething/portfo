@@ -4,6 +4,7 @@ const path = require('path');
 const winston = require('winston');
 const auth = require('../middleware/auth');
 const mailer = require('../services/mailer');
+const User = require('../models/user');
 
 const router = express.Router();
 
@@ -12,8 +13,15 @@ router.get('/', auth, (req, res) => {
     if (req.signedIn) {
         _.extend(context, _.pick(req.user, ['name', 'photo']));
         context.balance = toDollars(req.user.balance);
+        context.available = toDollars(req.user.balance - req.user.spent);
     }
     res.render('index', context);
+});
+
+router.get('/buy/:symbol/:quantity', auth, async (req, res) => {
+    if (!req.signedIn) return res.send({ failure: 'Must be logged in to buy stocks.' });
+    if (await req.user.buy(req.params.symbol, req.params.quantity)) return res.redirect('/');
+    return res.send({ failure: 'Insufficient funds.' });
 });
 
 router.get('/resume', (req, res) => {
