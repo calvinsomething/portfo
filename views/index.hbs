@@ -90,16 +90,13 @@
                                     <p class="text-muted m-t-15">Balance: ${{ balance }}<br>Available: ${{ available }}</p>
                                     <div class="bg-c-blue counter-block m-t-10 p-20">
                                         <div class="row">
-                                            <p>Top stocks:</p>
+                                            <p>Your Stocks:</p>
+                                            {{#each stocks}}
                                             <div class="col">
-                                                1111
+                                                <button type="button" class="btn-primary btn-sm border" style="background-color: transparent;"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal">{{ this }}</button>
                                             </div>
-                                            <div class="col">
-                                                22222
-                                            </div>
-                                            <div class="col">
-                                                333
-                                            </div>
+                                            {{/each}}
                                         </div>
                                     </div>
                                 </div>
@@ -108,6 +105,23 @@
                             <h5>Sign in with:</h5>
                             <a href="/auth/google"><img id="google" src="/site/assets/img/google.png"></a>
                         {{/if}}
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card user-card col">
                             <nav class="navbar navbar-expand navbar-light">
@@ -118,9 +132,9 @@
                                     <div class="collapse navbar-collapse" id="navbarScroll">
                                     <form class="d-flex" id="find-stock">
                                         <input class="form-control me-2" type="search" placeholder="Find Stock By Symbol" aria-label="Find Stock" name="symbol">
-                                        <button class="btn btn-outline-success me-2" type="submit">Find</button>
+                                        <button class="btn btn-primary me-2" type="submit">Find</button>
                                         <input id="quantity" class="form-control me-2 ms-5" placeholder="Quantity" name="quantity">
-                                        <button id="buy" class="btn btn-outline-success">Buy</button>
+                                        <button id="buy" class="btn btn-primary">Buy</button>
                                     </form>
                                     </div>
                                 </div>

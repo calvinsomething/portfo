@@ -14,6 +14,10 @@ router.get('/', auth, (req, res) => {
         _.extend(context, _.pick(req.user, ['name', 'photo']));
         context.balance = toDollars(req.user.balance);
         context.available = toDollars(req.user.balance - req.user.spent);
+        context.stocks = [];
+        req.user.stocks.forEach(s => {
+            context.stocks.push(s.symbol)
+        });
     }
     res.render('index', context);
 });

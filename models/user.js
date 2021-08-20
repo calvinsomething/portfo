@@ -42,7 +42,10 @@ const userSchema = new mongoose.Schema({
         default: 0,
         min: 0
     },
-    stocks: [stockSchema]
+    stocks: {
+        type: [stockSchema],
+        validate: [(stocks) => stocks.length < 4, 'Can only have 3 stocks at a time.']
+    }
 });
 
 // Methods
