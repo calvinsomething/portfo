@@ -9,6 +9,8 @@ const stockSchema = new mongoose.Schema({
         type: String,
         minLength: 1,
         maxLength: 4,
+        get: v => v.toUpperCase(),
+        set: v => v.toUpperCase(),
         required: true
     },
     quantity: {

@@ -94,7 +94,7 @@
                                             {{#each stocks}}
                                             <div class="col">
                                                 <button type="button" class="btn-primary btn-sm border" style="background-color: transparent;"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModal">{{ this }}</button>
+                                                data-bs-toggle="modal" data-bs-target="#{{ this }}modal">{{ this }}</button>
                                             </div>
                                             {{/each}}
                                         </div>
@@ -106,11 +106,12 @@
                             <a href="/auth/google"><img id="google" src="/site/assets/img/google.png"></a>
                         {{/if}}
                         </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        {{#each stocks}}
+                        <div class="modal fade" id="{{ this }}modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ this }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -123,6 +124,7 @@
                                 </div>
                             </div>
                         </div>
+                        {{/each}}
                         <div class="card user-card col">
                             <nav class="navbar navbar-expand navbar-light">
                                 <div class="container-fluid">

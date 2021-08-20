@@ -32,7 +32,7 @@ router.get('/buy/:symbol/:quantity', auth, async (req, res) => {
     try {
         if (await req.user.buy(req.params.symbol, req.params.quantity)) return res.redirect('/');
     } catch(err) {
-        return res.send({ failure: 'Can only have three kinds of stocks. Must sell some if you want to buy a different kind.' });
+        return res.send({ failure: 'Can only have three kinds of stocks.\nMust sell some if you want to buy a different kind.' });
     }
     return res.send({ failure: 'Insufficient funds.' });
 });
@@ -40,7 +40,7 @@ router.get('/buy/:symbol/:quantity', auth, async (req, res) => {
 function cleanData(data) {
     const { timestamp: t } = data;
     // Set array with proper size and string lengths
-    const times = Array.from('00:00'.repeat(t.lenght));
+    const times = Array(t.length).fill('00:00');
     // Fill array with times converted to hh:mm format
     for (let i = 0; i < t.length; i++) {
         const d = new Date(t[i] * 1000 + UTCtoEST);
