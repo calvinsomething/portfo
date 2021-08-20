@@ -49,7 +49,7 @@ form.addEventListener('submit', e => {
 buy.addEventListener('click', async () => {
     const quantity = new FormData(form).get('quantity');
     if (quantity < 1) return alert('Must enter a valid quantity.');
-    const res = await fetch(`/buy/${currentStock}/${quantity}`);
+    const res = await fetch(`/stocks/buy/${currentStock}/${quantity}`);
     const j = await res.json();
     if (j.failure) alert(j.failure);
 });

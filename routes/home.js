@@ -18,12 +18,6 @@ router.get('/', auth, (req, res) => {
     res.render('index', context);
 });
 
-router.get('/buy/:symbol/:quantity', auth, async (req, res) => {
-    if (!req.signedIn) return res.send({ failure: 'Must be logged in to buy stocks.' });
-    if (await req.user.buy(req.params.symbol, req.params.quantity)) return res.redirect('/');
-    return res.send({ failure: 'Insufficient funds.' });
-});
-
 router.get('/resume', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'resume.html'));
 });

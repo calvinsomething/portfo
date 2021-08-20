@@ -3,7 +3,8 @@ const winston = require('winston');
 
 const app = require('./app');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
+if (!PORT) throw new Error('Must define "PORT" env variable.');
 
 const server = http.createServer(app);
 

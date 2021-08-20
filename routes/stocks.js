@@ -1,5 +1,7 @@
 const axios = require('axios').default;
 const express = require('express');
+const winston = require('winston');
+const auth = require('../middleware/auth');
 const { middleware: cache, setexAsync: setCache } = require('../middleware/cache');
 
 const router = express.Router();
@@ -21,8 +23,14 @@ router.get('/', cache, (req, res) => {
     axios.request(options).then(function (response) {
         return res.send(cleanData(response.data.chart.result[0]));
     }).catch(function (error) {
-        console.error(error);
+        winston.error(error);
     });
+});
+
+router.get('/buy/:symbol/:quantity', auth, async (req, res) => {
+    if (!req.signedIn) return res.send({ failure: 'Must be logged in to buy stocks.' });
+    if (await req.user.buy(req.params.symbol, req.params.quantity)) return res.redirect('/');
+    return res.send({ failure: 'Insufficient funds.' });
 });
 
 function cleanData(data) {
