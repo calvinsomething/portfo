@@ -94,7 +94,7 @@
                                             {{#each stocks}}
                                             <div class="col">
                                                 <button type="button" class="btn-primary btn-sm border" style="background-color: transparent;"
-                                                data-bs-toggle="modal" data-bs-target="#{{ this }}modal">{{ this }}</button>
+                                                data-bs-toggle="modal" data-bs-target="#{{ this.symbol }}modal">{{ this.symbol }}</button>
                                             </div>
                                             {{/each}}
                                         </div>
@@ -107,15 +107,24 @@
                         {{/if}}
                         </div>
                         {{#each stocks}}
-                        <div class="modal fade" id="{{ this }}modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="{{ this.symbol }}modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">{{ this }}</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ this.symbol }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                    <div class="row">
+                                        <div class="col">Quantity</div>
+                                        <div class="col">Average Cost</div>
+                                        <div class="col">Total Cost</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">{{ this.quantity }}</div>
+                                        <div class="col">{{ this.averageCost }}</div>
+                                        <div class="col">{{ this.totalCost }}</div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

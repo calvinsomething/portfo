@@ -70,6 +70,19 @@ userSchema.statics.findOrCreate = async function(profile, cb) {
     }
 };
 
+userSchema.methods.getStocks = function(toDollars) {
+    const stocks = [];
+    this.stocks.forEach(s => {
+        stocks.push({
+            symbol: s.symbol,
+            averageCost: toDollars(s.totalCost / s.quantity),
+            quantity: s.quantity,
+            totalCost: toDollars(s.totalCost)
+        });
+    });
+    return stocks;
+};
+
 userSchema.methods.buy = async function(symbol, quantity) {
     const totalPrice = await getStockPrice(symbol) * quantity;
     if (totalPrice > this.balance - this.spent) return false;
