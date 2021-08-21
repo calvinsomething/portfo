@@ -95,7 +95,10 @@ for (element of document.getElementsByClassName('stocks')) {
     const symbol = element.innerHTML;
     const price = document.getElementById(`${symbol}_price`);
     element.addEventListener('click', () => { getPrice(symbol, price) });
-    createOptions(document.getElementById(`${symbol}_sell_quantity`), document.getElementById(`${symbol}_quantity`).innerHTML);
+    const sellQuantity = document.getElementById(`${symbol}_sell_quantity`);
+    createOptions(sellQuantity, document.getElementById(`${symbol}_quantity`).innerHTML);
+    const sell = document.getElementById(`${symbol}_sell`);
+    sell.addEventListener('click', () => { sellStock(symbol, sellQuantity.selectedOptions[0].value) });
 }
 
 async function getPrice(symbol, price) {
@@ -111,6 +114,20 @@ function createOptions(select, quantity) {
         option.value = i;
         select.add(option, null);
     }
+}
+
+async function sellStock(symbol, quantity) {
+    try {
+        const res = await fetch(`/stocks/sell/${symbol}/${quantity}`);
+        const contentType = res.headers.get('content-type');
+        if (contentType.indexOf('application/json') !== -1) {
+            const j = await res.json();
+            if (j.failure) return alert(j.failure);
+        }
+    } catch (err) {
+        console.log('Error while attempting to sell stocks.');
+    }
+    location.reload();
 }
 
 // Open PDF in new window

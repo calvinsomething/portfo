@@ -43,6 +43,7 @@ describe('User model', () => {
 
     it('should reduce spent by amount equal to sold stocks', async () => {
         testUser.spent = 100;
+        testUser.stocks = [{symbol: 'TEST', quantity: 20, totalCost: 10000}];
         await testUser.save();
         await testUser.sell('TEST', 10);
         expect(testUser.spent).toBe(0);

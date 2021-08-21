@@ -30,11 +30,21 @@ router.get('/', cache, (req, res) => {
 router.get('/buy/:symbol/:quantity', auth, async (req, res) => {
     if (!req.signedIn) return res.send({ failure: 'Must be logged in to buy stocks.' });
     try {
-        if (await req.user.buy(req.params.symbol, req.params.quantity)) return res.redirect('/');
+        if (await req.user.buy(req.params.symbol, parseInt(req.params.quantity, 10))) return res.redirect('/');
     } catch(err) {
-        return res.send({ failure: 'Can only have three kinds of stocks.\nMust sell some if you want to buy a different kind.' });
+        return res.send({ failure: err.message });
     }
     return res.send({ failure: 'Insufficient funds.' });
+});
+
+router.get('/sell/:symbol/:quantity', auth, async (req, res) => {
+    if (!req.signedIn) return res.send({ failure: 'Must be logged in to sell stocks.' });
+    try {
+        if (await req.user.sell(req.params.symbol, parseInt(req.params.quantity, 10))) return res.redirect('/');
+    } catch(err) {
+        return res.send({ failure: err.message });
+    }
+    return res.send({ failure: 'Cannot sell more stocks than owned.' });
 });
 
 function cleanData(data) {

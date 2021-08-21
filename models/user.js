@@ -76,8 +76,7 @@ userSchema.methods.getStocks = function(toDollars) {
         stocks.push({
             symbol: s.symbol,
             averageCost: toDollars(s.totalCost / s.quantity),
-            quantity: s.quantity,
-            totalCost: toDollars(s.totalCost)
+            quantity: s.quantity
         });
     });
     return stocks;
@@ -106,8 +105,10 @@ userSchema.methods.sell = async function(symbol, quantity) {
     const totalPrice =  await getStockPrice(symbol) * quantity;
     const owned = this.stocks.find(stock => stock.symbol === symbol);
     if (owned !== undefined && quantity > owned.quantity) return false;
-    this.stocks.quantity -= quantity;
-    this.stocks.totalCost -= totalPrice;
+    owned.quantity -= quantity;
+    owned.totalCost -= totalPrice;
+    if (owned.quantity < 1)
+        this.stocks = this.stocks.filter(stock => stock.symbol !== symbol);
     this.spent -= totalPrice;
     await this.save();
     return true;
