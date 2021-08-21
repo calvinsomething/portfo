@@ -69,6 +69,7 @@ const stockGraph = new Chart(ctx, {
 
 async function graphStock(s) {
     const { symbol, times, prices } = await getData(s);
+    currentStock = symbol;
     stockGraph.data.labels = times;
     stockGraph.data.datasets = [{
         label: s,
@@ -81,7 +82,6 @@ async function graphStock(s) {
 
 async function getData(symbol) {
     try {
-        currentStock = symbol;
         const res = await fetch(`/stocks?symbol=${symbol}`);
         return res.json();
     } catch (err) {
@@ -89,6 +89,29 @@ async function getData(symbol) {
     }
 }
 
+// Dropdown and Price Check in Stock Modal
+
+for (element of document.getElementsByClassName('stocks')) {
+    const symbol = element.innerHTML;
+    const price = document.getElementById(`${symbol}_price`);
+    element.addEventListener('click', () => { getPrice(symbol, price) });
+    createOptions(document.getElementById(`${symbol}_sell_quantity`), document.getElementById(`${symbol}_quantity`).innerHTML);
+}
+
+async function getPrice(symbol, price) {
+    const { prices } = await getData(symbol);
+    price.innerHTML = prices[prices.length - 1];
+}
+
+function createOptions(select, quantity) {
+    const n = parseInt(quantity, 10) + 1;
+    for (let i = 1; i < n; i++) {
+        const option = document.createElement('option');
+        option.text = i;
+        option.value = i;
+        select.add(option, null);
+    }
+}
 
 // Open PDF in new window
 
