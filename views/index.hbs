@@ -19,11 +19,12 @@
         <!-- Page Content-->
         <div class="container-fluid p-0">
             <!-- About-->
-            <div class="row">
-                <div class="col-12">
-                    <section class="resume-section" id="about">
+            <section class="resume-section" id="about">
+                <div class="row">
+                    <div class="col-xl-7">
                         <div class="resume-section-content">
                             {{test}}
+                            <div class="d-none d-xxl-block"><br><br></div>
                             <h1>Calvin <span class="text-primary">Storoschuk</span></h1>
                             <div class="subheading mb-5">
                                 Toronto ON · (416) 795 5025 ·
@@ -31,11 +32,13 @@
                             </div>
                             <p class="lead">I am a self-taught programmer focused on back-end development.<br>I love collaborating, problem solving, and learning new things.</p>
                         </div>
-                        <img id="headshot" class="d-none d-md-block float-right ms-5 shadow-lg p-1 bg-body" src="site/assets/img/calvin3.jpg" alt="Calvin Photo"/>
-                    </section>
+                    </div>
+                    <div class="col-xl-5">
+                        <img id="headshot" class="d-none d-md-block mx-2 shadow" src="site/assets/img/calvin.jpg" alt="Calvin Photo"/>
+                    </div>
                 </div>
-            </div>
-            <img id="headshot" class="d-md-none mx-5 mb-5 none-m-lg border border-5" src="site/assets/img/calvin.jpg" alt="Calvin Photo"/>
+            </section>
+            <img style="width: 360px;" class="d-md-none mx-4 mb-5 none-m-lg" src="site/assets/img/calvin.jpg" alt="Calvin Photo"/>
             </div>
             <hr class="m-0" />
             <!-- Projects -->
@@ -66,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </div>
             </section>
             <hr class="m-0" />
