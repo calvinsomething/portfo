@@ -1,4 +1,5 @@
 const cookieSession = require('cookie-session');
+const cors = require('cors');
 const helmet = require('helmet');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -30,7 +31,19 @@ module.exports = (app) => {
         keys: [ process.env.SESSION_KEY_1, process.env.SESSION_KEY_2 ]
     }));
     
-    app.use(helmet());
+    app.use(helmet.contentSecurityPolicy({
+        directives: {
+          defaultSrc: ["'self'", 'https://fonts.gstatic.com'],
+          scriptSrc: ["'self'", 'https://use.fontawesome.com', 'https://cdn.jsdelivr.net'],
+          styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"],
+          imgSrc: ["'self'", 'https://lh3.googleusercontent.com', 'data:'],
+          formAction: ["'self'"]
+        }
+    }));
+    app.use(cors({
+        origin: 'http://localhost:6379',
+        optionsSuccessStatus: 200
+    }));
     app.use(passport.initialize());
     app.use(passport.session());
 };
