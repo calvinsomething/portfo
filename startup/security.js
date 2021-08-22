@@ -1,4 +1,5 @@
 const cookieSession = require('cookie-session');
+const helmet = require('helmet');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
@@ -29,6 +30,7 @@ module.exports = (app) => {
         keys: [ process.env.SESSION_KEY_1, process.env.SESSION_KEY_2 ]
     }));
     
+    app.use(helmet());
     app.use(passport.initialize());
     app.use(passport.session());
 };
