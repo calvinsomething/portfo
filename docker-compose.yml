@@ -14,18 +14,18 @@ services:
         depends_on:
             - db
             - cache
-    server_test:
-        image: portfo_server
-        environment:
-            DB: mongodb://db/portfo_test
-            REDIS: redis://cache
-        volumes:
-            - .:/home/server/app
-        command: npm run docker-test
-        depends_on:
-            - server
-            - db
-            - cache
+    # server_test:
+    #     image: portfo_server
+    #     environment:
+    #         DB: mongodb://db/portfo_test
+    #         REDIS: redis://cache
+    #     volumes:
+    #         - .:/home/server/app
+    #     command: npm run docker-test
+    #     depends_on:
+    #         - server
+    #         - db
+    #         - cache
     db:
         image: mongo:4.4.8-focal
         ports:
