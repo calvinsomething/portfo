@@ -6,11 +6,13 @@ services:
         build: .
         ports:
             - 80:5000
+            - 443:5000
         environment:
             DB: mongodb://db/portfo
             REDIS: redis://cache
         volumes:
             - .:/home/server/app
+            - /etc/letsencrypt:/etc/letsencrypt
         depends_on:
             - db
             - cache
