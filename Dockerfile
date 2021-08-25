@@ -4,6 +4,6 @@ USER server
 RUN mkdir /home/server/app
 WORKDIR /home/server/app
 COPY --chown=server:server package*.json ./
-RUN npm install
+RUN npm install --only=prod
 EXPOSE 5000
 CMD ["npm", "start"]

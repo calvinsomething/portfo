@@ -7,15 +7,9 @@ const app = require('./app');
 const PORT = process.env.PORT;
 if (!PORT) throw new Error('Must define "PORT" env variable.');
 
-const key = fs.readFileSync('/etc/letsencrypt/live/calvinsomething.com/privkey.pem');
-const cert = fs.readFileSync('/etc/letsencrypt/live/calvinsomething.com/fullchain.pem');
-
-winston.info(key);
-winston.info(cert);
-
 const server = https.createServer({
-    key: key,
-    cert: cert
+    key: fs.readFileSync('/etc/letsencrypt/live/calvinsomething.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/calvinsomething.com/fullchain.pem')
 }, app);
 
 server.listen(PORT, () => winston.info(`Listening on port ${PORT}...`));
