@@ -103,7 +103,7 @@ for (element of document.getElementsByClassName('stocks')) {
 
 async function getPrice(symbol, price) {
     const { prices } = await getData(symbol);
-    price.innerHTML = prices[prices.length - 1];
+    price.innerHTML = Math.floor(prices[prices.length - 1] * 10) / 10;
 }
 
 function createOptions(select, quantity) {
