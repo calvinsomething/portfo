@@ -64,7 +64,8 @@ buy.addEventListener('click', async () => {
 
 const ctx = document.getElementById('stock-chart').getContext('2d');
 const stockGraph = new Chart(ctx, {
-    type: 'line'
+    type: 'line',
+    responsive: true
 });
 
 async function graphStock(s) {

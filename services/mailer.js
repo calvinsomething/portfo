@@ -11,13 +11,12 @@ module.exports = async function (senderEmail, name, message) {
           pass: process.env.MG_PASSWORD,
         },
     });
-  
     try {
         await transporter.sendMail({
-            from: senderEmail,
+            from: 'contactform@calvinsomething.com',
             to: "calvinsomething@gmail.com",
             subject: `Message From: ${name}`,
-            text: message
+            text: `${senderEmail} says: ${message}`
         });
     } catch (err) {
         winston.error(err);
