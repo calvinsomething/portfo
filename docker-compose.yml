@@ -1,12 +1,11 @@
 version: "3.9"
 
 services:
-    server:
+    node:
         env_file: .env
         build: .
-        ports:
-            - 80:5000
-            - 443:5000
+        expose:
+            - 5000
         environment:
             DB: mongodb://db/portfo
             REDIS: redis://cache
@@ -30,16 +29,25 @@ services:
     #         - cache
     db:
         image: mongo:4.4.8-focal
-        ports:
-            - 27017:27017
+        expose:
+            - 27017
         volumes:
             - ./db:/data/db
     cache:
         image: redis:alpine
-        ports:
-            - 6379:6379
         expose:
             - 6379
         restart: always
         depends_on:
             - db
+    nginx:
+        build:
+            dockerfile: ./nginx/Dockerfile
+            context: ./
+        volumes:
+            - /etc/letsencrypt/:/etc/letsencrypt/
+        ports:
+            - 80:80
+            - 443:443
+        depends_on:
+            - node
