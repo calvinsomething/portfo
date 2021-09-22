@@ -10,7 +10,7 @@ module.exports = (app) => {
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "/auth/google/callback"
+        callbackURL: "https://calvinsomething.com/auth/google/callback"
     },
     (accessToken, refreshToken, profile, done) => {
         User.findOrCreate(profile, done);

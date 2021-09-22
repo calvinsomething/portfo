@@ -41,9 +41,7 @@ services:
         depends_on:
             - db
     nginx:
-        build:
-            dockerfile: ./nginx/Dockerfile
-            context: ./
+        build: ./nginx
         volumes:
             - /etc/letsencrypt/:/etc/letsencrypt/
         ports:
